@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+Task List
+{% endblock title %}
+
+{% block content %}
+<main>
+  <div class="col-auto">
+    <h1>All Tasks</h1>
+    <a href="{% url 'tasks:task-create' %}">
+      <div class="d-flex justify-content-center">
+        <h1>+</h1>
+      </div>
+    </a>
+  </div>
+
+  {% for task in task_list %}
+    <div class="card mb-3">
+      <div class="row card-body">
+        <div class="col-10">
+          <h5 class="card-title">{{ task.content }} {% if task.is_done %}<strong class="text-success">Done{% else %}<strong class="text-danger">Not Done{% endif %}</strong></h5>
+          {% if task.get_tags %}
+            <p class="card-text">Tags: {{ task.get_tags }}</p>
+          {% endif %}
+          <p class="card-text"><small class="text-muted">Created: {{ task.created_at }}</small></p>
+          {% if task.deadline %}
+          <p class="card-text"><small class="text-danger">Due: {{ task.deadline }}</small></p>
+          {% endif %}
+        </div>
+        <div class="col-2">
+          <div class="row">
+            <div class="col">
+              <a href="{% url 'tasks:task-update' task.pk %}" class="btn btn-outline-warning">Update</a>
+            </div>
+            <div class="col">
+              <a href="{% url 'tasks:task-delete' task.pk %}" class="btn btn-outline-danger">Delete</a>
+            </div>
+          </div>
+          <div class="col-12 my-4">
+            {% if task.is_done %}
+              <a href="{% url 'tasks:task-toggle' task.pk %}" class="btn btn-outline-secondary">Undo</a>
+            {% else %}
+              <a href="{% url 'tasks:task-toggle' task.pk %}" class="btn btn-outline-success">Complete</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</main>
+{% endblock %}
