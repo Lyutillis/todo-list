@@ -12,7 +12,7 @@ def toggle_complete_url(pk) -> str:
 class PublicFunctionBasedViewsTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.task = Task.objects.create(
+        Task.objects.create(
             content="TestTask",
             deadline=timezone.now(),
             is_done=False,
@@ -21,7 +21,9 @@ class PublicFunctionBasedViewsTest(TestCase):
     def test_toggle_complete_view(self):
         response = self.client.get(toggle_complete_url(1))
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(self.task.is_done)
+        task = Task.objects.get(pk=1)
+        self.assertTrue(task.is_done)
         response = self.client.get(toggle_complete_url(1))
         self.assertEqual(response.status_code, 302)
-        self.assertFalse(self.task.is_done)
+        task = Task.objects.get(pk=1)
+        self.assertFalse(task.is_done)
