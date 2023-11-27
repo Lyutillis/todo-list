@@ -10,11 +10,11 @@ class Task(models.Model):
 
     class Meta:
         ordering = ("is_done", "-created_at")
-    
+
     def __str__(self) -> str:
         return f"{self.content} Done: {self.is_done} Due: {self.deadline}"
 
-    def get_tags(self) -> str|None:
+    def get_tags(self) -> str | None:
         tags = [tag.name for tag in self.tags.all()]
         if len(tags):
             return ", ".join(tags)

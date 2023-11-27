@@ -10,9 +10,7 @@ TASKS_URL = reverse("tasks:task-list")
 class PublicTagTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.tag = Tag.objects.create(
-            name="TestTag"
-        )
+        cls.tag = Tag.objects.create(name="TestTag")
         number_of_tasks = 23
 
         for task_id in range(number_of_tasks):
@@ -64,7 +62,10 @@ class PublicTagTest(TestCase):
             "deadline": timezone.now(),
             "tags": [self.tag.pk],
         }
-        self.client.post(reverse("tasks:task-update", args=[1]), data=form_data)
+        self.client.post(
+            reverse("tasks:task-update", args=[1]),
+            data=form_data
+        )
         task = Task.objects.get(pk=1)
 
         self.assertEqual(task.content, form_data["content"])

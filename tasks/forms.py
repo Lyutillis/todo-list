@@ -16,6 +16,11 @@ class TaskForm(forms.ModelForm):
         queryset=Tag.objects.prefetch_related(),
         widget=forms.CheckboxSelectMultiple,
     )
+
     class Meta:
         model = Task
-        fields = ("deadline", "content", "tags",)
+        fields = (
+            "deadline",
+            "content",
+            "tags",
+        )

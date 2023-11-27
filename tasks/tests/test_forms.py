@@ -8,15 +8,13 @@ from tasks.forms import TaskForm
 class TestForms(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        tag = Tag.objects.create(
-            name="TestTag"
-        )
+        Tag.objects.create(name="TestTag")
 
     def test_task_form(self):
         form_data = {
             "deadline": timezone.now(),
             "content": "TestContent",
-            "tags": Tag.objects.filter(pk=1)
+            "tags": Tag.objects.filter(pk=1),
         }
         form = TaskForm(data=form_data)
         self.assertTrue(form.is_valid())

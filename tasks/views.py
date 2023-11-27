@@ -14,7 +14,6 @@ def toggle_complete_view(request, pk):
     return HttpResponseRedirect(reverse_lazy("tasks:task-list"))
 
 
-
 class TaskListView(ListView):
     model = Task
     paginate_by = 4
